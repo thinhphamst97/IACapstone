@@ -5,76 +5,96 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class ImageDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private int id = -1;
+	private String name = null;
+	private String type = null;
+	private float size = -1;
+	private String description = null;
+	private boolean isActive = false;
+	private Date dateCreated = null;
+	private KernelDTO kernel = null;
 
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private String name;
-    private String description;
-    private boolean isActive;
-    private Date dateCreated;
-    private int kernelId;
+	public ImageDTO(int id, String name, String type, float size, String description, boolean isActive, Date dateCreated,
+			KernelDTO kernel) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.size = size;
+		this.description = description;
+		this.isActive = isActive;
+		this.dateCreated = dateCreated;
+		this.kernel = kernel;
+	}
 
-    public ImageDTO(int id, String name, String description, boolean isActive, Date dateCreated, int kernelId) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.isActive = isActive;
-        this.dateCreated = dateCreated;
-        this.kernelId = kernelId;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public float getSize() {
+		return size;
+	}
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
+	public void setSize(float size) {
+		this.size = size;
+	}
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+	public KernelDTO getKernel() {
+		return kernel;
+	}
 
-    public boolean isActive() {
-        return isActive;
-    }
+	public void setKernel(KernelDTO kernel) {
+		this.kernel = kernel;
+	}
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Date getDateCreated() {
+		return dateCreated;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public boolean isActive() {
+		return isActive;
+	}
 
-    public int getKernelId() {
-        return kernelId;
-    }
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
-    public void setKernelId(int kernelId) {
-        this.kernelId = kernelId;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public static void main(String[] args) {
-        LocalDate now = LocalDate.now();
-        System.out.println(Date.valueOf(now).toString());
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public static void main(String[] args) {
+		LocalDate now = LocalDate.now();
+		System.out.println(Date.valueOf(now).toString());
+	}
 
 }
