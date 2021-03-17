@@ -97,8 +97,9 @@
                                 </div>
                                 <div class="card-body">
                                     <c:set var="addImageStatus" value="${param.addImageStatus}"/>
-                                    <div class="table-responsive">
-                                        <c:set var="listImage" value="${requestScope.resultList}"/>
+
+                                    <c:set var="listImage" value="${requestScope.resultList}"/>
+                                    <form action="MainServlet" method="post">
                                         <table class="table">
                                             <thead class=" text-primary">
                                             <th>
@@ -129,6 +130,7 @@
                                                             </td>
                                                             <td id="id_${status.index+1}" style="width: 15%">
                                                                 ${x.get(0)}
+                                                                <input id = "${status.index}" name="id[]" type="hidden" value="${x.get(0)}"/>
                                                             </td>
                                                             <td style="width: 15%">
                                                                 ${x.get(1)}
@@ -139,18 +141,21 @@
                                                             <td style="width: 15%">
                                                                 <c:if test="${x.get(3) eq 'Active'}" >
                                                                     <h4  id="isActive_${status.index+1}" style="color: green; font-weight: bold" >Active</h4>
+                                                                    <input id = "hidden_status_${status.index+1}" name="imageStatus[]" type="hidden" value="${x.get(3)}"/>
                                                                 </c:if>
                                                                 <c:if test="${x.get(3) eq 'Inactive'}" >
                                                                     <h4 id="isActive_${status.index+1}" style="color: red; font-weight: bold">Inactive</h4>
+                                                                    <input id = "hidden_status_${status.index+1}" name="imageStatus[]" type="hidden" value="${x.get(3)}"/>
                                                                 </c:if>
                                                             </td>
                                                             <td style="width: 15%">
-                                                                <button type="submit" class="btn btn-sm">View</button>
+                                                                <button  class="btn btn-sm">View</button>
+                                                                <c:set var="isClick" value="0"></c:set>
                                                                 <c:if test="${x.get(3) eq 'Active'}" >
-                                                                    <button id="btnChangeStatus${status.index+1}" type="submit" class="btn btn-sm btn-danger"  onclick="changeStatus(${status.index+1})">Deactivate</button>
+                                                                    <button id="btnChangeStatus${status.index+1}" class="btn btn-sm btn-danger" type="button" onclick="changeStatus(${status.index+1})">Deactivate</button>
                                                                 </c:if>
                                                                 <c:if test="${x.get(3) eq 'Inactive'}" >
-                                                                    <button id="btnChangeStatus${status.index+1}" type="submit" class="btn btn-sm btn-success"  onclick="changeStatus(${status.index+1})">     Active     </button>
+                                                                    <button id="btnChangeStatus${status.index+1}" class="btn btn-sm btn-success"  type="button" onclick="changeStatus(${status.index+1})">     Active     </button>
                                                                 </c:if>
                                                             </td>
                                                         </tr>
@@ -158,9 +163,13 @@
                                                 </c:if>
                                             </tbody>
                                         </table>
-                                        <a href="addimage.jsp"><button type="submit" class="btn btn-primary">Add new Image</button></a>
-                                        <a href=""><button type="submit" class="btn btn-primary">Update table</button></a>
-                                    </div>
+                                        <a href="addimage.jsp"><button type="submit" class="btn btn-primary pull-left">Add new Image</button></a>
+                                        <button class="btn btn-primary" name="action" value="UpdateStatusImage">Update Table</button>
+                                    </form>
+
+
+
+
                                     <c:if  test="${not empty addImageStatus && addImageStatus == true}">
                                         <p class="text-success">Add new Image successful</p>
                                     </c:if>
@@ -197,18 +206,22 @@
     function changeStatus(cellIndex) { //change status Image to Active status == Deactive
         var tdCellIndex = 'isActive_' + cellIndex;
         var btnCellIndex = 'btnChangeStatus' + cellIndex;
+        var statusID = 'hidden_status_' + cellIndex;
+        var imageStatus = document.getElementById(statusID);
         var cell = document.getElementById(tdCellIndex);
         var btn = document.getElementById(btnCellIndex);
-        if (cell.style.color == 'red') {
+        if (cell.style.color === 'red') {
             cell.style.color = 'green'; //change <p> to Inactive with color red
             cell.innerText = "Active";
             btn.className = 'btn btn-sm btn-danger'; //change <button> to Active with color green
             btn.innerText = "Deactivate";
+            imageStatus.value = 'Active';
         } else {
-            cell.style.color = 'red'; //change <p> to Inactive with color red
+            cell.style.color = 'red';
             cell.innerText = "Inactive";
-            btn.className = 'btn btn-sm btn-success'; //change <button> to Active with color green
+            btn.className = 'btn btn-sm btn-success';
             btn.innerText = "     Active     ";
+            imageStatus.value = 'Inactive';
         }
     }
 </script>

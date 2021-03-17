@@ -13,9 +13,7 @@ public class DBUtils {
         try {
             Class.forName(driver);
             c = DriverManager.getConnection(url);
-            System.out.println("Connect successfully!!");
         } catch (ClassNotFoundException e) {
-            System.out.println("driver: " + driver);
             e.printStackTrace();
         }
         return c;

@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +41,8 @@ public class MainServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String url = null;
-            String action = request.getParameter("action");
-
+            String action = request.getParameter("action");            
+            String[] imageStatus = request.getParameterValues("imageStatus[]");
             if ("".equals(action) || action == null) {
                 url = LOGINFORM;
             } else if ("Login".equals(action)) {
@@ -52,7 +53,7 @@ public class MainServlet extends HttpServlet {
                 url = IMAGE;
             } else if ("AddImage".equals(action)) {
                 url = ADD_IMAGE;
-            } 
+            }
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
