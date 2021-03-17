@@ -17,6 +17,7 @@ public class MainServlet extends HttpServlet {
     private final String LOGINFORM = "loginForm.html";
     private final String IMAGELIST = "ImageListServlet";
     private final String IMAGEDETAILS = "ImageDetailsServlet";
+    private final String UPDATESTATUSIMAGE = "UpdateStatusImageServlet";
 
     public MainServlet() {
         super();
@@ -27,7 +28,7 @@ public class MainServlet extends HttpServlet {
         String url = null;
         String action = request.getParameter("action");
         if ("".equals(action) || action == null) {
-            url = LOGINFORM;
+            url = IMAGELIST;
         } else if ("Login".equals(action)) {
             url = LOGIN;
         } else if ("ImageList".equals(action)) {
@@ -35,13 +36,7 @@ public class MainServlet extends HttpServlet {
         } else if ("ImageDetails".equals(action)) {
             url = IMAGEDETAILS;
         } else if ("UpdateStatusImage".equals(action)) {
-            System.out.println("Sample for Hieu:");
-            String[] id = request.getParameterValues("id[]");
-            String[] status = request.getParameterValues("imageStatus[]");
-            for (int i = 0; i < id.length; i++) {
-                System.out.println("ID: " + id[i] + " Status: " + status[i]);
-            }
-            url = IMAGELIST;
+            url = UPDATESTATUSIMAGE;
         } else {
             url = NOTFOUND;
         }

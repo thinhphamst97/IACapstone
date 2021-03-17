@@ -12,6 +12,31 @@ import dto.ImageDTO;
 import dto.KernelDTO;
 
 public class ImageDAO {
+	
+	public static boolean updateStatusImage(int id, boolean isActive) {
+        Connection c = null;
+        PreparedStatement preState = null;
+        int effect = 0;
+        boolean result = false;
+
+        try {
+            c = DBUtils.ConnectDB();
+            if (c != null) {
+                String sql = "update `image` set `isActive`=? where `id`=?";
+                preState = c.prepareStatement(sql);
+                preState.setBoolean(1, isActive);
+                preState.setInt(2, id);
+                effect = preState.executeUpdate();
+                if (effect > 0) {
+                    result = true;
+                }
+                c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+	}
 
     public static ImageDTO getImageDetails(int id) {
         Connection c = null;
