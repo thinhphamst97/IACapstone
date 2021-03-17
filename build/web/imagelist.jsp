@@ -47,7 +47,7 @@
                         </li>
                         <!-- your sidebar here -->
                         <li class="nav-item active">
-                            <a class="nav-link" href="MainServlet?action=Image">
+                            <a class="nav-link" href="MainServlet?action=ImageList">
                                 <i class="material-icons">image</i>
                                 <p>Image List</p>
                             </a>
@@ -98,7 +98,7 @@
                                 <div class="card-body">
                                     <c:set var="addImageStatus" value="${param.addImageStatus}"/>
 
-                                    <c:set var="listImage" value="${requestScope.resultList}"/>
+                                    <c:set var="listImage" value="${requestScope.imageList}"/>
                                     <form action="MainServlet" method="post">
                                         <table class="table">
                                             <thead class=" text-primary">
@@ -125,37 +125,37 @@
                                                 <c:if test="${not empty listImage}">
                                                     <c:forEach items="${listImage}" var="x" varStatus="status">
                                                         <tr>
-                                                            <td style="width: 10%">
-                                                                ${status.index+1}
+                                                            <td id="id_${x.getId()}" style="width: 10%">
+                                                                ${x.getId()+1}
+                                                                <input id = "${status.index}" name="id[]" type="hidden" value="${x.getId()}"/>
                                                             </td>
-                                                            <td id="id_${status.index+1}" style="width: 15%">
-                                                                ${x.get(0)}
-                                                                <input id = "${status.index}" name="id[]" type="hidden" value="${x.get(0)}"/>
-                                                            </td>
-                                                            <td style="width: 15%">
-                                                                ${x.get(1)}
+                                                            <td  style="width: 15%">
+                                                                ${x.getName()}
                                                             </td>
                                                             <td style="width: 15%">
-                                                                ${x.get(2)}
+                                                                ${x.kernel.getName()}
                                                             </td>
                                                             <td style="width: 15%">
-                                                                <c:if test="${x.get(3) eq 'Active'}" >
-                                                                    <h4  id="isActive_${status.index+1}" style="color: green; font-weight: bold" >Active</h4>
-                                                                    <input id = "hidden_status_${status.index+1}" name="imageStatus[]" type="hidden" value="${x.get(3)}"/>
+                                                                ${x.getDateCreated()}
+                                                            </td>
+                                                            <td style="width: 15%">
+                                                                <c:if test="${x.isActive() eq true}" >
+                                                                    <h4  id="isActive_${status.index}" style="color: green; font-weight: bold" >Active</h4>
+                                                                    <input id = "hidden_status_${status.index}" name="imageStatus[]" type="hidden" value="${x.isActive()}"/>
                                                                 </c:if>
-                                                                <c:if test="${x.get(3) eq 'Inactive'}" >
-                                                                    <h4 id="isActive_${status.index+1}" style="color: red; font-weight: bold">Inactive</h4>
-                                                                    <input id = "hidden_status_${status.index+1}" name="imageStatus[]" type="hidden" value="${x.get(3)}"/>
+                                                                <c:if test="${x.isActive() eq false}" >
+                                                                    <h4 id="isActive_${status.index}" style="color: red; font-weight: bold">Inactive</h4>
+                                                                    <input id = "hidden_status_${status.index}" name="imageStatus[]" type="hidden" value="${x.isActive()}"/>
                                                                 </c:if>
                                                             </td>
                                                             <td style="width: 15%">
                                                                 <button  class="btn btn-sm">View</button>
                                                                 <c:set var="isClick" value="0"></c:set>
-                                                                <c:if test="${x.get(3) eq 'Active'}" >
-                                                                    <button id="btnChangeStatus${status.index+1}" class="btn btn-sm btn-danger" type="button" onclick="changeStatus(${status.index+1})">Deactivate</button>
+                                                                <c:if test="${x.isActive() eq true}" >
+                                                                    <button id="btnChangeStatus${x.getId()}" class="btn btn-sm btn-danger" type="button" onclick="changeStatus(${x.getId()})">Deactivate</button>
                                                                 </c:if>
-                                                                <c:if test="${x.get(3) eq 'Inactive'}" >
-                                                                    <button id="btnChangeStatus${status.index+1}" class="btn btn-sm btn-success"  type="button" onclick="changeStatus(${status.index+1})">     Active     </button>
+                                                                <c:if test="${x.isActive() eq false}" >
+                                                                    <button id="btnChangeStatus${x.getId()}" class="btn btn-sm btn-success"  type="button" onclick="changeStatus(${x.getId()})">     Active     </button>
                                                                 </c:if>
                                                             </td>
                                                         </tr>
@@ -215,13 +215,13 @@
             cell.innerText = "Active";
             btn.className = 'btn btn-sm btn-danger'; //change <button> to Active with color green
             btn.innerText = "Deactivate";
-            imageStatus.value = 'Active';
+            imageStatus.value = 'true';
         } else {
             cell.style.color = 'red';
             cell.innerText = "Inactive";
             btn.className = 'btn btn-sm btn-success';
             btn.innerText = "     Active     ";
-            imageStatus.value = 'Inactive';
+            imageStatus.value = 'false';
         }
     }
 </script>

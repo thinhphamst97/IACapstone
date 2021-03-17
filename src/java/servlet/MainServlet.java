@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 @WebServlet("/MainServlet")
 public class MainServlet extends HttpServlet {
 
@@ -28,7 +26,6 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
         String action = request.getParameter("action");
-
         if ("".equals(action) || action == null) {
             url = LOGINFORM;
         } else if ("Login".equals(action)) {
@@ -37,6 +34,14 @@ public class MainServlet extends HttpServlet {
             url = IMAGELIST;
         } else if ("ImageDetails".equals(action)) {
             url = IMAGEDETAILS;
+        } else if ("UpdateStatusImage".equals(action)) {
+            System.out.println("Sample for Hieu:");
+            String[] id = request.getParameterValues("id[]");
+            String[] status = request.getParameterValues("imageStatus[]");
+            for (int i = 0; i < id.length; i++) {
+                System.out.println("ID: " + id[i] + " Status: " + status[i]);
+            }
+            url = IMAGELIST;
         } else {
             url = NOTFOUND;
         }
