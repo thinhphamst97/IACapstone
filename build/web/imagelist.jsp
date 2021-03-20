@@ -125,20 +125,20 @@
                                                 <c:if test="${not empty listImage}">
                                                     <c:forEach items="${listImage}" var="x" varStatus="status">
                                                         <tr>
-                                                            <td id="id_${x.getId()}" style="width: 10%">
+                                                            <td id="id_${x.getId()}" style="width: 5%">
                                                                 ${x.getId()+1}
                                                                 <input id = "${status.index}" name="id[]" type="hidden" value="${x.getId()}"/>
                                                             </td>
-                                                            <td  style="width: 15%">
+                                                            <td  style="width: 16%">
                                                                 ${x.getName()}
                                                             </td>
-                                                            <td style="width: 15%">
+                                                            <td style="width: 16%">
                                                                 ${x.kernel.getName()}
                                                             </td>
-                                                            <td style="width: 15%">
+                                                            <td style="width: 16%">
                                                                 ${x.getDateCreated()}
                                                             </td>
-                                                            <td style="width: 15%">
+                                                            <td style="width: 16%">
                                                                 <c:if test="${x.isActive() eq true}" >
                                                                     <h4  id="isActive_${status.index}" style="color: green; font-weight: bold" >Active</h4>
                                                                     <input id = "hidden_status_${status.index}" name="imageStatus[]" type="hidden" value="${x.isActive()}"/>
@@ -148,15 +148,17 @@
                                                                     <input id = "hidden_status_${status.index}" name="imageStatus[]" type="hidden" value="${x.isActive()}"/>
                                                                 </c:if>
                                                             </td>
-                                                            <td style="width: 15%">
-                                                                <button  class="btn btn-sm">View</button>
-                                                                <c:set var="isClick" value="0"></c:set>
+                                                            <td style="width: 13%">
                                                                 <c:if test="${x.isActive() eq true}" >
-                                                                    <button id="btnChangeStatus${x.getId()}" class="btn btn-sm btn-danger" type="button" onclick="changeStatus(${x.getId()})">Deactivate</button>
+                                                                    <button id="btnChangeStatus${x.getId()}" class="btn btn-sm btn-danger"  type="button" onclick="changeStatus(${x.getId()})">Deactivate</button>
                                                                 </c:if>
                                                                 <c:if test="${x.isActive() eq false}" >
                                                                     <button id="btnChangeStatus${x.getId()}" class="btn btn-sm btn-success"  type="button" onclick="changeStatus(${x.getId()})">     Active     </button>
                                                                 </c:if>
+                                                                <form action="MainServlet" method="post" style="margin:0px; padding:0px; display:inline">
+                                                                    <input type="hidden" name="id" value="${x.getId()}">
+                                                                    <button class="btn btn-sm" name="action" value="ImageDetails">View</button> 
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>  

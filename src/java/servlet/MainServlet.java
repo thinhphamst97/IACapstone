@@ -13,6 +13,7 @@ public class MainServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private final String NOTFOUND = "404.html";
+    private final String DASHBOARD = "index.jsp";
     private final String LOGIN = "LoginServlet";
     private final String LOGINFORM = "loginForm.html";
     private final String IMAGELIST = "ImageListServlet";
@@ -31,6 +32,8 @@ public class MainServlet extends HttpServlet {
             url = IMAGELIST;
         } else if ("Login".equals(action)) {
             url = LOGIN;
+        }else if("Dashboard".equals(action)){
+            url = DASHBOARD;
         } else if ("ImageList".equals(action)) {
             url = IMAGELIST;
         } else if ("ImageDetails".equals(action)) {

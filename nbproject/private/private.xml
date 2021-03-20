@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/WebApp/IACapstone/src/java/dto/ImageDTO.java</file>
+            <file>file:/E:/WebApp/IACapstone/src/java/servlet/ImageDetailsServlet.java</file>
+            <file>file:/E:/WebApp/IACapstone/web/imageDetailsWindows.jsp</file>
             <file>file:/E:/WebApp/IACapstone/web/imagelist.jsp</file>
-            <file>file:/E:/WebApp/IACapstone/src/java/dto/KernelDTO.java</file>
+            <file>file:/E:/WebApp/IACapstone/src/java/servlet/MainServlet.java</file>
             <file>file:/E:/WebApp/IACapstone/src/java/dao/ImageDAO.java</file>
-            <file>file:/E:/WebApp/IACapstone/src/java/servlet/ImageServlet.java</file>
+            <file>file:/E:/WebApp/IACapstone/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
