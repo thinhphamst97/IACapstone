@@ -17,8 +17,7 @@ import dto.ImageDTO;
 @WebServlet("/ImageDetailsServlet")
 public class ImageDetailsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String WINDOWS = "imageDetailsWindows.jsp";
-	private static final String LINUX = "imageDetailsLinux.jsp";
+	private static final String PAGE = "imageDetails.jsp";
 
     public ImageDetailsServlet() {
         super();
@@ -44,7 +43,7 @@ public class ImageDetailsServlet extends HttpServlet {
 					request.setAttribute("kernelPath", kernelPath);
 					request.setAttribute("fileSystemPath", fileSystemPath);
 					request.setAttribute("initrdPathList", initrdPathList);
-					request.getRequestDispatcher(WINDOWS).forward(request, response);
+					request.getRequestDispatcher(PAGE).forward(request, response);
 				} else if (image.getType().equalsIgnoreCase("linux")) {
 					String kernelPath = String.format("%s/%s/vmlinuz", webRoot, image.getName());
 					String fileSystemPath = String.format("%s/%s/%s.img", webRoot, image.getName(), image.getName());
@@ -55,7 +54,7 @@ public class ImageDetailsServlet extends HttpServlet {
 					request.setAttribute("kernelPath", kernelPath);
 					request.setAttribute("fileSystemPath", fileSystemPath);
 					request.setAttribute("initrdPathList", initrdPathList);
-					request.getRequestDispatcher(LINUX).forward(request, response);
+					request.getRequestDispatcher(PAGE).forward(request, response);
 				} else {
 					out.println("Unknown image type");
 					out.close();
