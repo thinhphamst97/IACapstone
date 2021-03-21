@@ -27,29 +27,29 @@ public class ImageDetailsServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		ServletContext context = getServletContext();
-		String webRoot = context.getInitParameter("webRoot");
+		String imagePath = context.getInitParameter("imagePath");
 		if (request.getParameter("id") != null) {
 			int id;
 			try {
 				id = Integer.valueOf(request.getParameter("id"));
 				ImageDTO image = ImageDAO.getImageDetails(id);
 				if (image.getType().equalsIgnoreCase("windows")) {
-					String kernelPath = String.format("%s/wimboot", webRoot);
-					String fileSystemPath = String.format("%s/%s/boot.wim", webRoot, image.getName());
+					String kernelPath = String.format("%s/wimboot", imagePath);
+					String fileSystemPath = String.format("%s/%s/boot.wim", imagePath, image.getName());
 					ArrayList<String> initrdPathList = new ArrayList<String>();
-					initrdPathList.add(String.format("%s/%s/bcd", webRoot, image.getName()));
-					initrdPathList.add(String.format("%s/%s/boot.sdi", webRoot, image.getName()));
+					initrdPathList.add(String.format("%s/%s/bcd", imagePath, image.getName()));
+					initrdPathList.add(String.format("%s/%s/boot.sdi", imagePath, image.getName()));
 					request.setAttribute("image", image);
 					request.setAttribute("kernelPath", kernelPath);
 					request.setAttribute("fileSystemPath", fileSystemPath);
 					request.setAttribute("initrdPathList", initrdPathList);
 					request.getRequestDispatcher(PAGE).forward(request, response);
 				} else if (image.getType().equalsIgnoreCase("linux")) {
-					String kernelPath = String.format("%s/%s/vmlinuz", webRoot, image.getName());
-					String fileSystemPath = String.format("%s/%s/%s.img", webRoot, image.getName(), image.getName());
+					String kernelPath = String.format("%s/%s/vmlinuz", imagePath, image.getName());
+					String fileSystemPath = String.format("%s/%s/%s.img", imagePath, image.getName(), image.getName());
 					ArrayList<String> initrdPathList = new ArrayList<String>();
-					initrdPathList.add(String.format("%s/%s/initrd.img", webRoot, image.getName()));
-					initrdPathList.add(String.format("%s/ltsp.img", webRoot));
+					initrdPathList.add(String.format("%s/%s/initrd.img", imagePath, image.getName()));
+					initrdPathList.add(String.format("%s/ltsp.img", imagePath));
 					request.setAttribute("image", image);
 					request.setAttribute("kernelPath", kernelPath);
 					request.setAttribute("fileSystemPath", fileSystemPath);
@@ -66,7 +66,7 @@ public class ImageDetailsServlet extends HttpServlet {
 				return;
 			}
 			//call ImageDAO
-			out.println(webRoot);
+			out.println(imagePath);
 			out.println(id);
 			
 		} else {
