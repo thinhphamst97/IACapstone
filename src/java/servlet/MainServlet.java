@@ -14,6 +14,7 @@ public class MainServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final String NOTFOUND = "404.html";
     private final String DASHBOARD = "index.jsp";
+    private final String DEPLOY = "deploy.jsp";
     private final String LOGIN = "LoginServlet";
     private final String LOGINFORM = "loginForm.html";
     private final String IMAGELIST = "ImageListServlet";
@@ -40,6 +41,8 @@ public class MainServlet extends HttpServlet {
             url = IMAGEDETAILS;
         } else if ("UpdateStatusImage".equals(action)) {
             url = UPDATESTATUSIMAGE;
+        } else if ("Deploy".equals(action)) {
+            url = DEPLOY; //redirect to deploy.jsp 
         } else {
             url = NOTFOUND;
         }

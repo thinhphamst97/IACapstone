@@ -4,7 +4,7 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <context-param>  
-        <param-name>webRoot</param-name>  
+        <param-name>imagePath</param-name>  
         <param-value>/var/www/html/ltsp</param-value>  
     </context-param>  
 </web-app>
