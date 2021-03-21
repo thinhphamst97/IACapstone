@@ -162,13 +162,9 @@
                                                 </c:if>
                                             </tbody>
                                         </table>
-                                        <a href="addimage.jsp"><button type="submit" class="btn btn-primary pull-left">Add new Image</button></a>
-                                        <button class="btn btn-primary" name="action" value="UpdateStatusImage">Update Table</button>
                                     </form>
-
-
-
-
+                                    <a href="addimage.jsp"><button type="button" class="btn btn-primary pull-left">Add new Image</button></a>
+                                    <button class="btn btn-primary" name="action" value="UpdateStatusImage">Update Table</button>
                                     <c:if  test="${not empty addImageStatus && addImageStatus == true}">
                                         <p class="text-success">Add new Image successful</p>
                                     </c:if>
