@@ -15,27 +15,28 @@ import dto.ImageDTO;
 
 @WebServlet("/ImageListServlet")
 public class ImageListServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1L;
     private final String PAGE = "imagelist.jsp";
 
     public ImageListServlet() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<ImageDTO> imageList = ImageDAO.getImageList();
-		if (imageList != null) {
-			request.setAttribute("imageList", (imageList));
-			request.getRequestDispatcher(PAGE).forward(request, response);
-		} else {
-			PrintWriter out = response.getWriter();
-			out.println("Empty image list");
-		}
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<ImageDTO> imageList = ImageDAO.getImageList();
+        if (imageList != null) {
+            request.setAttribute("imageList", (imageList));
+            request.getRequestDispatcher(PAGE).forward(request, response);
+        } else {
+            PrintWriter out = response.getWriter();
+            out.println("Empty image list");
+        }
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
 
 }

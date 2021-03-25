@@ -93,19 +93,19 @@
                                     <form>
                                         <h4 class="card-title ">Choose an OS: </h4>
                                         <select name="selectedOS" id="selectOS">
-                                        <c:if test="${not empty selectedOS}">
-                                            <option value="">   --- Choose an OS ----   </option>
-                                            <option value="windows" ${selectedOS eq 'windows' ? 'selected' : ''}>Windows</option>
-                                            <option value="linux" ${selectedOS eq 'linux' ? 'selected' : ''}>Linux</option>
-                                        </c:if>
-                                        <c:if test="${empty selectedOS}">
-                                            <option value="">   --- Choose an OS ----   </option>
-                                            <option value="windows">Windows</option>
-                                            <option value="linux">Linux</option>
-                                        </c:if>
-                                    </select>
-                                    <button type="submit" class="btn btn-sm btn-outline-light" value="submit">OK</button>
-                                </form>
+                                            <c:if test="${not empty selectedOS}">
+                                                <option value="">   --- Choose an OS ----   </option>
+                                                <option value="windows" ${selectedOS eq 'windows' ? 'selected' : ''}>Windows</option>
+                                                <option value="linux" ${selectedOS eq 'linux' ? 'selected' : ''}>Linux</option>
+                                            </c:if>
+                                            <c:if test="${empty selectedOS}">
+                                                <option value="">   --- Choose an OS ----   </option>
+                                                <option value="windows">Windows</option>
+                                                <option value="linux">Linux</option>
+                                            </c:if>
+                                        </select>
+                                        <button type="submit" class="btn btn-sm btn-outline-light" value="submit">OK</button>
+                                    </form>
                             </div>
                             <div class="card-body">
                                 <c:set var="selectedOS" value="${param.selectedOS}"/>

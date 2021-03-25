@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -100,7 +101,86 @@
                             </li>
                         </nav>
                         <!-- Content -->
-                        
+                        <div class="card-body">
+                            <c:set var="imageList" value="${requestScope.imageList}"/>
+                            <c:set var="kernelPath" value="${requestScope.kernelPath}"/>
+                            <c:set var="initrdFiles" value="${requestScope.initrdPathList}"/>
+                            <c:set var="systemPath" value="${requestScope.fileSystemPath}"/>
+                            <c:set var="selectedImage" value="${param.selectImage}"/>
+                            <form action="MainServlet" method="post">
+                                <h4 class="card-title ">Choose an Image: </h4>
+                                <select name="selectImage" id="selectImage">
+                                    <option value="-1">   --- Choose an Image ----   </option> <!--selected ID = -1 -->
+                                    <c:if test="${not empty imageList}">
+                                        <c:forEach var="x" items="${imageList}">
+                                            <option value="${x.getId()}" ${selectedImage eq x.getId() ? 'selected' : ''}>${x.getName()}</option>
+                                        </c:forEach>                                 
+                                    </c:if>
+                                </select>         
+                                <button type="submit" class="btn btn-sm btn-outline-light" name="action" value="Deploy">OK</button>
+                            </form>
+                            <c:if test="${selectedImage ne -1}">
+                                <c:set var="selectedImage" value="${param.selectImage}"/> <!--selected ID-->
+                            </c:if> 
+                            <c:if test="${not empty selectedImage}">
+                                <c:forEach var="x" items="${imageList}">
+                                    <c:if test="${x.getId() eq selectedImage}">
+                                        <div id="details">
+                                            <div class="card">
+                                                <div class="card-header card-header-primary">
+                                                    <h4 class="card-title">${x.getName()}</h4>
+                                                    <p class="card-category">${x.getDescription()}</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <label for="type" style="color: black">Type:</label>
+                                                    <input type="text" id="type" class="form-control" value="${x.getType()}" disabled="">
+                                                    <label for="date" style="color: black">Created date:</label>
+                                                    <input type="text" id="date" class="form-control" value="${x.getDateCreated()}" disabled="">
+                                                    <!--Kernel Path-->
+                                                    <label for="kLocation" style="color: black">Kernel location:</label> 
+                                                    <c:if test="${not empty kernelPath}">
+                                                        <input type="text" id="kLocation" class="form-control" value="${kernelPath}" disabled="">
+                                                    </c:if>
+                                                    <c:if test="${empty kernelPath}">
+                                                        <input type="text" id="kLocation" class="form-control" value="Not found" disabled="">
+
+                                                    </c:if>
+                                                    <!--bcd path-->
+                                                    <label for="bcdLocation" style="color: black">BCD location:</label>
+                                                    <c:if test="${not empty initrdFiles}">
+                                                        <input type="text"  class="form-control" value="${initrdFiles.get(0)}" disabled="">
+                                                    </c:if>
+                                                    <c:if test="${empty initrdFiles}">
+                                                        <input type="text" id="bcdLocation" class="form-control" value="Not found" disabled="">
+                                                    </c:if>
+                                                    <!--boot.sdi path-->
+                                                    <label for="bootSdiLocation" style="color: black">Boot.sdi location:</label>
+                                                    <c:if test="${not empty initrdFiles}">
+                                                        <input type="text"  class="form-control" value="${initrdFiles.get(1)}" disabled="">
+                                                    </c:if>
+                                                    <c:if test="${empty initrdFiles}">
+                                                        <input type="text" id="bootSdiLocation" class="form-control" value="Not found" disabled="">
+                                                    </c:if>
+                                                    <!--boot.wim path-->
+                                                    <label for="bootWimLocation" style="color: black">File system location:</label>
+                                                    <c:if test="${not empty systemPath}">
+                                                        <input type="text" id="bootWimLocation" class="form-control" value="${systemPath}" disabled="">
+                                                    </c:if>
+                                                    <c:if test="${empty systemPath}">
+                                                        <input type="text" id="bootWimLocation" class="form-control" value="Not found" disabled="">
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form action="MainServlet" method="post" style="text-align: center">
+                                            <input type="hidden" name="idDeploy" value="${x.getId()}">
+                                            <button type="submit" name="action" value="Deploy" class="btn btn-success">Deploy</button>
+                                        </form>
+                                    </c:if>
+                                </c:forEach>        
+                            </c:if>
+                        </div>
+
                     </div>
                 </div>
                 <footer class="footer">

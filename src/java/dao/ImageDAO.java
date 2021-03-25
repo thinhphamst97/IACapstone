@@ -103,7 +103,31 @@ public class ImageDAO {
         }
         return result;
     }
-
+    
+//    public static ArrayList<String> getListImageName() {
+//        Connection c = null;
+//        PreparedStatement preState = null;
+//        ResultSet rs = null;
+//        
+//        ArrayList<String> result = new ArrayList<String>();
+//        try {
+//            c = DBUtils.ConnectDB();
+//            if (c != null) {
+//                String sql = "select `name` from image order by id";
+//                preState = c.prepareStatement(sql);
+//                rs = preState.executeQuery();
+//                while (rs != null && rs.next()) {
+//                    String iName = rs.getString("name");
+//                    result.add(iName);
+//                }
+//                c.close();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
+    
     public static ArrayList<ImageDTO> getAll() {
         Connection c = null;
         PreparedStatement preState = null;
