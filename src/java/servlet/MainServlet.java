@@ -21,6 +21,7 @@ public class MainServlet extends HttpServlet {
     private final String IMAGEDETAILS = "ImageDetailsServlet";
     private final String UPDATESTATUSIMAGE = "UpdateStatusImageServlet";
 
+    
     public MainServlet() {
         super();
         // TODO Auto-generated constructor stub

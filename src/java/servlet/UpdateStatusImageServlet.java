@@ -12,7 +12,7 @@ import dao.ImageDAO;
 @WebServlet("/UpdateStatusImageServlet")
 public class UpdateStatusImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String PAGE = "MainServlet?action=ImageList";
+	private final String PAGE = "MainServlet?action=ImageList";
 
     public UpdateStatusImageServlet() {
         super();

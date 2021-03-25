@@ -3,22 +3,20 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import dao.ImageDAO;
 import dto.ImageDTO;
 
 @WebServlet("/ImageDetailsServlet")
 public class ImageDetailsServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	private static final String PAGE = "imagedetails.jsp";
+    private final long serialVersionUID = 1L;
+    private final String PAGE = "imageDetails.jsp";
 
     public ImageDetailsServlet() {
         super();
@@ -26,7 +24,6 @@ public class ImageDetailsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-
         ServletContext context = getServletContext();
         String imagePath = context.getInitParameter("imagePath");
         if (request.getParameter("id") != null) {
@@ -69,10 +66,10 @@ public class ImageDetailsServlet extends HttpServlet {
             //call ImageDAO
             out.println(imagePath);
             out.println(id);
-
         } else {
             out.println("Need to specify image id: id=...");
         }
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

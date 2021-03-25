@@ -47,9 +47,7 @@ public class ImageDAO {
         try {
             c = DBUtils.ConnectDB();
             if (c != null) {
-                String sql = "select i.name, i.description, i.type\r\n"
-                        + "from `image` as `i`, `kernel` as `k`\r\n"
-                        + "where i.kernelID = k.id and i.id = ?";
+                String sql = "select `name`, `description`, `type` from image where id = ?";
                 preState = c.prepareStatement(sql);
                 preState.setInt(1, id);
                 rs = preState.executeQuery();

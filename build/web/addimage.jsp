@@ -46,7 +46,7 @@
                         </li>
                         <!-- your sidebar here -->
                         <li class="nav-item active">
-                            <a class="nav-link" href="MainServlet?action=Image">
+                            <a class="nav-link" href="MainServlet?action=ImageList">
                                 <i class="material-icons">image</i>
                                 <p>Image List</p>
                             </a>

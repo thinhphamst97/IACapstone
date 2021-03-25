@@ -124,7 +124,7 @@
                                     Error
                                 </c:if>
                                 <div class="col-md-auto">
-                                    <a href="MainServlet?action=Image"><button type="submit" class="btn btn-primary pull-right">Add Image</button></a>
+                                    <a href="MainServlet?action=Image"><button type="submit" class="btn btn-primary pull-right">Update Image</button></a>
                                 </div>
                             </div>
                         </div>
