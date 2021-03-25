@@ -17,8 +17,8 @@ import dto.ImageDTO;
 @WebServlet("/ImageDetailsServlet")
 public class ImageDetailsServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-    private static final String PAGE = "imageDetails.jsp";
+	private static final long serialVersionUID = 1L;
+	private static final String PAGE = "imagedetails.jsp";
 
     public ImageDetailsServlet() {
         super();

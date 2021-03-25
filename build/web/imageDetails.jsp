@@ -108,11 +108,11 @@
                                         </div>
                                         <div>
                                             <label for="bcdFile" style="color: black">BCD:</label>
-                                            <input type="text"  class="form-control" value="${initrdFiles.get(0)}">
+                                            <input type="text"  class="form-control" value="${initrdPathList.get(0)}">
                                         </div>
                                         <div>
                                             <label for="bootSdiFile" style="color: black">Boot.sdi:</label>
-                                            <input type="text" class="form-control" value="${initrdFiles.get(1)}">
+                                            <input type="text" class="form-control" value="${initrdPathList.get(1)}">
                                         </div>
                                         <div>
                                             <label for="bootWimFile" style="color: black">Boot.wim:</label>
