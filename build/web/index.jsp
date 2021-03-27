@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="MainServlet?action=Deploy">
+                            <a class="nav-link" href="MainServlet?action=Deploy&option=0">
                                 <i class="material-icons">upgrade</i>
                                 <p>Deploy</p>
                             </a>

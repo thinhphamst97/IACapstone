@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="sidebar-wrapper">
                     <ul class="nav">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="MainServlet?action=Dashboard">
                                 <i class="material-icons">dashboard</i>
                                 <p>Dashboard</p>
@@ -50,8 +51,8 @@
                                 <p>Image List</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="MainServlet?action=Deploy&option=0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="MainServlet?action=Deploy">
                                 <i class="material-icons">upgrade</i>
                                 <p>Deploy</p>
                             </a>
@@ -63,9 +64,6 @@
                 <!-- Navbar -->
                 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                     <div class="container-fluid">
-                        <div class="navbar-wrapper">
-                            <a class="navbar-brand" href="javascript:;">Dashboard</a>
-                        </div>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="navbar-toggler-icon icon-bar"></span>
@@ -87,7 +85,28 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <div class="container-fluid">
-                        <!-- your content here -->
+                        <!-- Navigation -->
+                        <nav class="nav nav-pills" style="background: seashell">
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: black" href="MainServlet?action=Deploy&option=0">Single OS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: black" href="MainServlet?action=Deploy&option=1">Multiple OS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" style="color: black" href="MainServlet?action=Deploy&option=2">Define OS within Client's MAC</a>
+                            </li>
+                        </nav>
+                        <!-- Content -->
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
                 <footer class="footer">

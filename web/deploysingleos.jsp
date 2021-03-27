@@ -88,16 +88,13 @@
                         <!-- Navigation -->
                         <nav class="nav nav-pills" style="background: seashell">
                             <li class="nav-item">
-                                <a class="nav-link active" style="color: black" href="#">Single OS</a>
+                                <a class="nav-link active" style="color: black" href="MainServlet?action=Deploy&option=0">Single OS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="color: black" href="#">Multiple OS</a>
+                                <a class="nav-link" style="color: black" href="MainServlet?action=Deploy&option=1">Multiple OS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="color: black" href="#">Define OS within Client's MAC</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" style="color: black" href="#">Disabled</a>
+                                <a class="nav-link" style="color: black" href="MainServlet?action=Deploy&option=2">Define OS within Client's MAC</a>
                             </li>
                         </nav>
                         <!-- Content -->
@@ -116,7 +113,8 @@
                                             <option value="${x.getId()}" ${selectedImage eq x.getId() ? 'selected' : ''}>${x.getName()}</option>
                                         </c:forEach>                                 
                                     </c:if>
-                                </select>         
+                                </select> 
+                                <input type="hidden" name="option" value="0">
                                 <button type="submit" class="btn btn-sm btn-outline-light" name="action" value="Deploy">OK</button>
                             </form>
                             <c:if test="${selectedImage ne -1}">
@@ -143,7 +141,6 @@
                                                     </c:if>
                                                     <c:if test="${empty kernelPath}">
                                                         <input type="text" id="kLocation" class="form-control" value="Not found" disabled="">
-
                                                     </c:if>
                                                     <!--bcd path-->
                                                     <label for="bcdLocation" style="color: black">BCD location:</label>
