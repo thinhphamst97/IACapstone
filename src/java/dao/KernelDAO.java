@@ -9,6 +9,31 @@ import dbutils.DBUtils;
 import dto.KernelDTO;
 
 public class KernelDAO {
+	public static int getHighestId() {
+        Connection c = null;
+        PreparedStatement preState = null;
+        ResultSet rs = null;
+        int result = -1;
+
+        try {
+            c = DBUtils.ConnectDB();
+            if (c != null) {
+                String sql = "SELECT id \n" + 
+                		"FROM kernel \n" + 
+                		"order by id desc\n" + 
+                		"limit 1";
+                preState = c.prepareStatement(sql);
+                rs = preState.executeQuery();
+                if (rs != null && rs.next()) {
+                    result = rs.getInt("id");
+                }
+                c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+	}
 
     public static KernelDTO getKernel(int id) {
         Connection c = null;
@@ -55,9 +80,10 @@ public class KernelDAO {
         }
         return isDuplicate;
     }
-
-    public static int addKernel(int id, String name) {
+    
+    public static int addKernel(String name) {
         int result = 0;
+        int id = getHighestId() + 1;
         try {
             boolean isDuplicate = checkDuplicate(id);
             Connection c = DBUtils.ConnectDB();
@@ -79,18 +105,22 @@ public class KernelDAO {
         return result;
     }
 
-    //int id: auto increment
-    public static int addKernel(String name, int version) {
+    public static int addKernel(int id, String name) {
         int result = 0;
         try {
+            boolean isDuplicate = checkDuplicate(id);
             Connection c = DBUtils.ConnectDB();
-            if (c != null) {
-                String sql = "insert into `kernel`(`name`, `version`) values(?, ?)";
+            if (c != null && !isDuplicate) {
+                String sql = "insert into `kernel`(`id`, `name`) values(?, ?)";
                 PreparedStatement preState = c.prepareStatement(sql);
-                preState.setString(1, name);
-                preState.setInt(2, version);
+                preState.setInt(1, id);
+                preState.setString(2, name);
                 result = preState.executeUpdate();
                 c.close();
+            }
+            if (isDuplicate) {
+                // Show error
+                System.out.println("Kernel id duplicated");
             }
         } catch (SQLException e) {
             e.printStackTrace();

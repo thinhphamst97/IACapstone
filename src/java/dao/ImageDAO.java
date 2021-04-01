@@ -12,6 +12,31 @@ import dto.ImageDTO;
 import dto.KernelDTO;
 
 public class ImageDAO {
+	public static int getHighestId() {
+        Connection c = null;
+        PreparedStatement preState = null;
+        ResultSet rs = null;
+        int result = -1;
+
+        try {
+            c = DBUtils.ConnectDB();
+            if (c != null) {
+                String sql = "SELECT id \n" + 
+                		"FROM image \n" + 
+                		"order by id desc\n" + 
+                		"limit 1";
+                preState = c.prepareStatement(sql);
+                rs = preState.executeQuery();
+                if (rs != null && rs.next()) {
+                    result = rs.getInt("id");
+                }
+                c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+	}
 	
 	public static boolean updateStatusImage(int id, boolean isActive) {
         Connection c = null;
@@ -233,6 +258,36 @@ public class ImageDAO {
                 preState.setBoolean(4, isActive);
                 preState.setDate(5, dateCreated);
                 preState.setInt(6, kernelId);
+                result = preState.executeUpdate();
+                c.close();
+            }
+            if (isDuplicate) {
+                // Show error
+                System.out.println("Image id duplicated");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static int addImage(String name, String type, float size, String description, boolean isActive, Date dateCreated, int kernelId) {
+        int result = 0;
+        int id = getHighestId() + 1;
+        try {
+            boolean isDuplicate = checkDuplicate(id);
+            Connection c = DBUtils.ConnectDB();
+            if (c != null && !isDuplicate) {
+                String sql = "insert into `image`(`id`, `name`, `type`, `size`, `description`, `isActive`, `dateCreated`, `kernelId`) values(?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement preState = c.prepareStatement(sql);
+                preState.setInt(1, id);
+                preState.setString(2, name);
+                preState.setString(3, type);
+                preState.setFloat(4, size);
+                preState.setString(5, description);
+                preState.setBoolean(6, isActive);
+                preState.setDate(7, dateCreated);
+                preState.setInt(8, kernelId);
                 result = preState.executeUpdate();
                 c.close();
             }
