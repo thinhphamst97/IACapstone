@@ -127,6 +127,43 @@ public class ImageDAO {
         return result;
     }
     
+    public static ArrayList<ImageDTO> getImageActiveList() {
+        Connection c = null;
+        PreparedStatement preState = null;
+        ResultSet rs = null;
+        ImageDTO image = null;
+        ArrayList<ImageDTO> result = new ArrayList<ImageDTO>();
+
+        try {
+            c = DBUtils.ConnectDB();
+            if (c != null) {
+                String sql = "select i.id iId, i.name iName, i.size, k.id kId, k.name kName, i.dateCreated, i.isActive\n"
+                        + "from `image` as `i`, `kernel` as `k`\n"
+                        + "where i.kernelID = k.id and i.isActive = true\n"
+                        + "order by iId asc";
+                preState = c.prepareStatement(sql);
+                rs = preState.executeQuery();
+                while (rs != null && rs.next()) {
+                    int iId = rs.getInt("iId");
+                    String iName = rs.getString("iName");
+                    float size = rs.getFloat("size");
+                    boolean isActive = rs.getBoolean("isActive");
+                    Date dateCreated = rs.getDate("dateCreated");
+                    int kId = rs.getInt("kId");
+                    String kName = rs.getString("kName");
+                    KernelDTO kernel = new KernelDTO(kId, kName);
+                    image = new ImageDTO(iId, iName, null, size, null, isActive, dateCreated, kernel);
+                    image.setKernel(kernel);
+                    result.add(image);
+                }
+                c.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
 //    public static ArrayList<String> getListImageName() {
 //        Connection c = null;
 //        PreparedStatement preState = null;

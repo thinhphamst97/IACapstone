@@ -170,6 +170,7 @@
                                             </div>
                                         </div>
                                         <form action="MainServlet" method="post" style="text-align: center">
+                                            <input type="hidden" name="option" value="0">
                                             <input type="hidden" name="idDeploy" value="${x.getId()}">
                                             <button type="submit" name="action" value="Deploy" class="btn btn-success">Deploy</button>
                                         </form>

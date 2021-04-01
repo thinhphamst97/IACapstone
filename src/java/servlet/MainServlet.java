@@ -20,6 +20,7 @@ public class MainServlet extends HttpServlet {
     private final String IMAGELIST = "ImageListServlet";
     private final String IMAGEDETAILS = "ImageDetailsServlet";
     private final String UPDATESTATUSIMAGE = "UpdateStatusImageServlet";
+    private final String ADDIMAGE = "AddImageServlet";
 
     
     public MainServlet() {
@@ -30,6 +31,14 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = null;
         String action = request.getParameter("action");
+//         Xem xét Directory tồn tại chưa
+//         Chưa thì tạo Directory /var/www/html/lstp/:
+//            1. Lần đầu khởi chạy App không bị lỗi
+//            2. Admin xoá nhầm folder /var/www/html/lstp/
+
+        // Mainservlet là thằng Navigation. Tất cả những request đều phải qua đây
+        // Không có request nào được gọi trực tiếp vào Servlet 
+        // khác mà không qua Mainservlet
         if ("".equals(action) || action == null) {
             url = IMAGELIST;
         } else if ("Login".equals(action)) {
@@ -42,7 +51,9 @@ public class MainServlet extends HttpServlet {
             url = IMAGEDETAILS;
         } else if ("UpdateStatusImage".equals(action)) {
             url = UPDATESTATUSIMAGE;
-        } else if ("Deploy".equals(action)) {
+        } else if ("AddImage".equals(action)) { 
+            url = ADDIMAGE;
+        }else if ("Deploy".equals(action)) {
             url = DEPLOY; //redirect to deploy.jsp 
         } else {
             url = NOTFOUND;

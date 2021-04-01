@@ -88,74 +88,115 @@
                 <div class="content">
                     <div class="container-fluid">
                         <div class="card">
-                            <c:set var="selectedOS" value="${param.selectedOS}"></c:set>
+                            <c:set var="selectedImage" value="${param.selectedImage}"></c:set>
                                 <div class="card-header card-header-primary">
-                                    <form>
-                                        <h4 class="card-title ">Choose an OS: </h4>
-                                        <select name="selectedOS" id="selectOS">
-                                            <c:if test="${not empty selectedOS}">
-                                                <option value="">   --- Choose an OS ----   </option>
-                                                <option value="windows" ${selectedOS eq 'windows' ? 'selected' : ''}>Windows</option>
-                                                <option value="linux" ${selectedOS eq 'linux' ? 'selected' : ''}>Linux</option>
-                                            </c:if>
-                                            <c:if test="${empty selectedOS}">
-                                                <option value="">   --- Choose an OS ----   </option>
-                                                <option value="windows">Windows</option>
-                                                <option value="linux">Linux</option>
-                                            </c:if>
-                                        </select>
-                                        <button type="submit" class="btn btn-sm btn-outline-light" value="submit">OK</button>
-                                    </form>
+                                    <form action="addimage.jsp" method="post">
+                                        <h4 class="card-title ">Choose an Image: </h4>
+                                        <select name="selectedImage" id="selectedImage">
+                                        <c:if test="${not empty selectedImage}">
+                                            <option value="">   --- Choose an Image ----   </option>
+                                            <option value="windows" ${selectedImage eq 'windows' ? 'selected' : ''}>Windows</option>
+                                            <option value="linux" ${selectedImage eq 'linux' ? 'selected' : ''}>Linux</option>
+                                        </c:if>
+                                        <c:if test="${empty selectedImage}">
+                                            <option value="">   --- Choose an Image ----   </option>
+                                            <option value="windows">Windows</option>
+                                            <option value="linux">Linux</option>
+                                        </c:if>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-light" value="submit">OK</button>
+                                </form>
                             </div>
                             <div class="card-body">
-                                <c:set var="selectedOS" value="${param.selectedOS}"/>
-                                <c:set var="addImageStatus" value="${param.addImageStatus}"/>
-                                <c:if test="${not empty selectedOS}">
-                                    <c:if test="${selectedOS eq 'windows'}">
-                                        <div class="col-md-3">
-                                            <div>
-                                                <label for="name" style="color: black">OS Name:</label>
-                                                <input type="text" id="name" class="form-control">
+                                <c:set var="selectedImage" value="${param.selectedImage}"/>
+                                <c:set var="result" value="${requestScope.result}"/>
+                                <c:if test="${not empty selectedImage}">
+                                    <c:if test="${selectedImage eq 'windows'}">
+                                        <form action="MainServlet" method="post" class="justify-content-center" style="text-align: center">
+                                            <div style="padding-left: 400px; padding-right: 400px">
+                                                <!--Windows name-->
+                                                <div>
+                                                    <label for="imageName" style="color: black">Image Name:</label>
+                                                    <input type="text" id="imageName" name="imageName" class="form-control">
+                                                </div>
+                                                <!--Descriptions-->
+                                                <div>
+                                                    <label for="imageDescription" style="color: black">Description: </label>
+                                                    <textarea id="imageDescription" name="imageDescription" rows="4" cols="30" class="form-control"></textarea> 
+                                                </div>
+                                                <!--Directory-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="dirName" style="color: black">Folder name:</label>
+                                                    <input type="text" id="dirName" name="imageFolderName" class="form-control">
+                                                </div>
+                                                <!--Kernel file-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="kernelFile" style="color: black" class="form-label">Kernel File:</label>
+                                                    <input type="text" id="kernelFile" name="kernelFile" class="form-control">
+                                                </div>
+                                                <!--BCD file-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="bcdPath" style="color: black">BCD File:</label>
+                                                    <input type="text" id="bcdPath" name="bcdPath" class="form-control">
+                                                </div>
+                                                <!--Boot.sdi file-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="bootSdiPath" style="color: black">Boot.sdi File:</label>
+                                                    <input type="text" id="bootSdiPath" name="bootSdiPath" class="form-control">
+                                                </div>
+                                                <!--Boot.wim file-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="bootWimPath" style="color: black">Boot.wim File:</label>
+                                                    <input type="text" id="bootWimPath" name="bootWimPath" class="form-control">
+                                                </div> 
+                                                <!--Forward all text fields to Mainservlet with aciton = Image-->
+                                                <input type="hidden" name="type" value="windows"/>
+                                                <input type="hidden" name="selectedImage" value="${selectedImage}">
+                                                <button type="submit" name="action" value="AddImage" class="btn btn-primary">Add Image</button>
                                             </div>
-                                            <div>
-                                                <label for="kernelFile" style="color: black" class="form-label">Kernel File:</label>
-                                                <input type="file" id="kernelFile" style="padding-left: 40px">
-                                            </div>
-                                            <div>
-                                                <label for="bcdFile" style="color: black">BCD File:</label>
-                                                <input type="file" id="bcdFile" class="input" style="padding-left: 40px">
-                                            </div>
-                                            <div>
-                                                <label for="bootSdiFile" style="color: black">Boot.sdi File:</label>
-                                                <input type="file" id="bootSdiFile" class="input" style="padding-left: 40px">
-                                            </div>
-                                            <div>
-                                                <label for="bootWimFile" style="color: black">Boot.wim File:</label>
-                                                <input type="file" id="bootWimFile" class="input" style="padding-left: 40px">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-auto">
-                                            <a href="MainServlet?action=Image"><button type="submit" class="btn btn-primary pull-right">Add Image</button></a>
-                                        </div>
+                                        </form> 
                                     </c:if>
-                                    <c:if test="${selectedOS eq 'linux'}">
-                                        <div class="col-md-3">
-                                            <div>
-                                                <label for="name" style="color: black">OS Name:</label>
-                                                <input type="text" id="name" class="form-control">
+                                    <c:if test="${selectedImage eq 'linux'}">
+                                        <form action="MainServlet" method="post" class="justify-content-center" style="text-align: center">
+                                            <div style="padding-left: 400px; padding-right: 400px">
+                                                <!--Linux name-->
+                                                <div>
+                                                    <label for="imageName" style="color: black">OS Name:</label>
+                                                    <input type="text" id="imageName" name="imageName" class="form-control">
+                                                </div>
+                                                <!--Descriptions-->
+                                                <div>
+                                                    <label for="imageDescription" style="color: black">Description: </label>
+                                                    <textarea id="imageDescription" name="imageDescription" rows="4" cols="30" class="form-control"></textarea> 
+                                                </div>
+                                                <!--Directory-->
+                                                <div>
+                                                    <label for="dirName" style="color: black">Folder name:</label>
+                                                    <input type="text" id="dirName" name="imageFolderName" class="form-control">
+                                                </div>
+                                                <!--VMDK file-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="kernelFile" style="color: black" class="form-label">Kernel name:</label>
+                                                    <input type="text" id="kernelFile" name="kernelFile" class="form-control">
+                                                </div>
+                                                <!--VMDK file-->
+                                                <div style="padding-bottom: 10px">
+                                                    <label for="vmdkPath" style="color: black" class="form-label">VMDK File:</label>
+                                                    <input type="text" id="vmdkPath" name="vmdkPath" class="form-control">
+                                                </div>
+                                                <!--Forward all text fields to Mainservlet with aciton = Image-->
+                                                <input type="hidden" name="type" value="windows"/>
+                                                <input type="hidden" name="selectedImage" value="${selectedImage}">
+                                                <button type="submit" name="action" value="AddImage" class="btn btn-primary">Add Image</button>
                                             </div>
-                                            <div>
-                                                <label for="kernelFile" style="color: black" class="form-label">VMDK File:</label>
-                                                <input type="file" id="kernelFile" style="padding-left: 40px">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-auto">
-                                            <a href="MainServlet?action=Image"><button type="submit" class="btn btn-primary pull-right">Add Image</button></a>
-                                        </div>
+                                        </form> 
                                     </c:if>
                                 </c:if>
-                                <c:if  test="${not empty addImageStatus && addImageStatus == false}">
-                                    <p class="text-danger">Failed to add new image</p>
+                                <c:if  test="${not empty result && result eq 'true'}">
+                                    <p class="text-success">Add image successfully</p>
+                                </c:if>
+                                <c:if  test="${not empty result && result ne 'true'}">
+                                    <p class="text-danger">${result}</p>
                                 </c:if>
                             </div>
                         </div>

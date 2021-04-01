@@ -43,8 +43,8 @@ public class DeployServlet extends HttpServlet {
             //option 2: OS within Client's MAC
             switch (option) {
                 case 0:
-                    ArrayList imageList = ImageDAO.getAll();
-                    request.setAttribute("imageList", imageList);
+                    ArrayList listForSingleOS = ImageDAO.getAll();
+                    request.setAttribute("imageList", listForSingleOS);
                     //Nếu request chứ selectImage --> trả về selectImage
                     if (request.getParameter("selectImage") != null && !request.getParameter("selectImage").equalsIgnoreCase("-1")) {
                         //Nếu selectImage == -1 thì nó là dòng text default --> bỏ qua
@@ -82,7 +82,16 @@ public class DeployServlet extends HttpServlet {
                     request.getRequestDispatcher(DEPLOY_SINGLE_OS).forward(request, response);
                     break;
                 case 1:
-                    request.getRequestDispatcher(DEPLOY_MULTIPLE_OS).forward(request, response);
+                    ArrayList<ImageDTO> listForMultipleOS = ImageDAO.getImageActiveList();
+                    if (listForMultipleOS != null) {
+                        request.setAttribute("imageList", (listForMultipleOS));
+                        request.getRequestDispatcher(DEPLOY_MULTIPLE_OS).forward(request, response);
+                    }
+                    if (request.getParameter("deployMultipleOS").equalsIgnoreCase("true")) {
+                        for (ImageDTO x : listForMultipleOS) {
+                            System.out.println("DEPLOY CAI NAY NE! ID= " + x.getId());
+                        }
+                    }
                     break;
                 case 2:
                     request.getRequestDispatcher(DEPLOY_OS_WITHIN_CLIENTMAC).forward(request, response);

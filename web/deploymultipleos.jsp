@@ -106,9 +106,6 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                 <th>
-                                    ID
-                                </th>
-                                <th>
                                     Name
                                 </th>
                                 <th>
@@ -119,14 +116,10 @@
                                 </th>
                                 </thead>
                                 <tbody>
-                                    <c:set var="listImage" value="${requestScope.listImage}"/>
-                                    <c:if test="${not empty listImage}">
-                                        <c:forEach items="${listImage}" var="x" varStatus="status">
+                                    <c:set var="imageList" value="${requestScope.imageList}"/>
+                                    <c:if test="${not empty imageList}">
+                                        <c:forEach items="${imageList}" var="x" varStatus="status">
                                             <tr>
-                                                <td id="id_${x.getId()}" style="width: 5%">
-                                                    ${x.getId()+1}
-                                                    <input id = "${status.index}" name="id[]" type="hidden" value="${x.getId()}"/>
-                                                </td>
                                                 <td  style="width: 16%">
                                                     ${x.getName()}
                                                 </td>
@@ -143,7 +136,8 @@
                             </table>
                         </div>
                         <form action="MainServlet" method="post" style="text-align: center">
-                            <input type="hidden" name="idDeploy" value="${x.getId()}">
+                            <input type="hidden" name="option" value="1">
+                            <input type="hidden" name="deployMultipleOS" value="true">
                             <button type="submit" name="action" value="Deploy" class="btn btn-success">Deploy</button>
                         </form>
                     </div>

@@ -108,6 +108,9 @@
                                                 Kernel
                                             </th>
                                             <th>
+                                                Size
+                                            </th>
+                                            <th>
                                                 Date
                                             </th>
                                             <th>
@@ -125,16 +128,19 @@
                                                                 ${x.getId()+1}
                                                                 <input id = "${status.index}" name="id[]" type="hidden" value="${x.getId()}"/>
                                                             </td>
-                                                            <td  style="width: 16%">
+                                                            <td  style="width: 14%">
                                                                 ${x.getName()}
                                                             </td>
-                                                            <td style="width: 16%">
+                                                            <td style="width: 14%">
                                                                 ${x.kernel.getName()}
                                                             </td>
-                                                            <td style="width: 16%">
+                                                            <td style="width: 14%">
+                                                                1.0GB
+                                                            </td>
+                                                            <td style="width: 14%">
                                                                 ${x.getDateCreated()}
                                                             </td>
-                                                            <td style="width: 16%">
+                                                            <td style="width: 14%">
                                                                 <c:if test="${x.isActive() eq true}" >
                                                                     <h4  id="isActive_${status.index}" style="color: green; font-weight: bold" >Active</h4>
                                                                     <input id = "hidden_status_${status.index}" name="imageStatus[]" type="hidden" value="${x.isActive()}"/>
@@ -151,10 +157,10 @@
                                                                 <c:if test="${x.isActive() eq false}" >
                                                                     <button id="btnChangeStatus${x.getId()}" class="btn btn-sm btn-success"  type="button" onclick="changeStatus(${x.getId()})">     Active     </button>
                                                                 </c:if>
-                                                                    <form action="MainServlet" method="post" style="margin:0px; padding:0px; display:inline">
-                                                                        <input type="hidden" name="id" value="${x.getId()}">
-                                                                        <button class="btn btn-sm" name="action" value="ImageDetails">View</button> 
-                                                                    </form>
+                                                                <form action="MainServlet" method="post" style="margin:0px; padding:0px; display:inline">
+                                                                    <input type="hidden" name="id" value="${x.getId()}">
+                                                                    <button class="btn btn-sm" name="action" value="ImageDetails">View</button> 
+                                                                </form>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>  

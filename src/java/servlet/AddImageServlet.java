@@ -28,7 +28,7 @@ public class AddImageServlet extends HttpServlet {
 
     private final long serialVersionUID = 1L;
     //private final String UPLOAD_DIRECTORY = "upload";
-    private final String PAGE = "addimageexample.jsp";
+    private final String PAGE = "addimage.jsp";
 
     public AddImageServlet() {
         super();
@@ -41,11 +41,15 @@ public class AddImageServlet extends HttpServlet {
     	int addResult;
         String imageName = request.getParameter("imageName");
         String imageDescription = request.getParameter("imageDescription");
+        
+        //FolderName will not conflict anymore
+        String imageFolderName = request.getParameter("imageFolderName");
+        
         String imagePath = getServletContext().getInitParameter("imagePath");
         String httpPath = getServletContext().getInitParameter("httpPath");
         String finalImagePath = imagePath + File.separator + imageName;
         String tempImagePath = httpPath + File.separator + "tmp";
-
+        
         if (imageName == null || imageName.equals("")) {
         	request.setAttribute("result", "Image name cannot be empty");
             forward(PAGE, request, response);

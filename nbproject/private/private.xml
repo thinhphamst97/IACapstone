@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/WebApp/IACapstone/src/java/servlet/ImageDetailsServlet.java</file>
             <file>file:/E:/WebApp/IACapstone/src/java/servlet/DeployServlet.java</file>
-            <file>file:/E:/WebApp/IACapstone/web/imagelist.jsp</file>
             <file>file:/E:/WebApp/IACapstone/web/addimage.jsp</file>
-            <file>file:/E:/WebApp/IACapstone/src/java/servlet/MainServlet.java</file>
             <file>file:/E:/WebApp/IACapstone/web/deploymultipleos.jsp</file>
-            <file>file:/E:/WebApp/IACapstone/web/index.jsp</file>
-            <file>file:/E:/WebApp/IACapstone/web/addimageexample.jsp</file>
-            <file>file:/E:/WebApp/IACapstone/web/deploywithinclientmac.jsp</file>
+            <file>file:/E:/WebApp/IACapstone/src/java/dao/ImageDAO.java</file>
+            <file>file:/E:/WebApp/IACapstone/web/receivehashexample.jsp</file>
             <file>file:/E:/WebApp/IACapstone/web/deploysingleos.jsp</file>
             <file>file:/E:/WebApp/IACapstone/web/imageDetails.jsp</file>
         </group>
