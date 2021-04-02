@@ -151,46 +151,46 @@
                                         <c:set var="fileSystemMd5" value="${requestScope.fileSystemMd5}"/>
                                         <c:set var="initrdMd5List" value="${requestScope.initrdMd5List}"/>
                                         <%--<c:if test="${not empty kernelMd5 &&  not empty fileSystemMd5 && not empty initrdMd5List}">--%>
-                                            <c:if test="${image.getType() eq 'windows'}">
-                                                <div class="justify-content-end">
-                                                    <div>
-                                                        <label for="kernelFile" style="color: black" class="form-label">Hash values:</label>
-                                                        <input type="text" class="form-control" value="${kernelMd5}">
-                                                    </div>
-                                                    <div>
-                                                        <label for="bcdFile" style="color: black"> </label>
-                                                        <input type="text"  class="form-control" value="${initrdMd5List.get(0)}">
-                                                    </div>
-                                                    <div>
-                                                        <label for="bootSdiFile" style="color: black"> </label>
-                                                        <input type="text" class="form-control" value="${initrdMd5List.get(1)}">
-                                                    </div>
-                                                    <div>
-                                                        <label for="bootWimFile" style="color: black"> </label>
-                                                        <input type="text" class="form-control" value="${fileSystemMd5}">
-                                                    </div>
+                                        <c:if test="${image.getType() eq 'windows'}">
+                                            <div class="justify-content-end">
+                                                <div>
+                                                    <label for="kernelFile" style="color: black" class="form-label">Hash values:</label>
+                                                    <input type="text" class="form-control" value="${kernelMd5}">
                                                 </div>
-                                            </c:if>
-                                            <c:if test="${image.getType() eq 'linux'}">
-                                                <div class="justify-content-end">
-                                                    <div>
-                                                        <label for="kernelFile" style="color: black" class="form-label">Hash values:</label>
-                                                        <input type="text" class="form-control" value="${kernelMd5}">
-                                                    </div>
-                                                    <div>
-                                                        <label for="bcdFile" style="color: black"> </label>
-                                                        <input type="text"  class="form-control" value="${initrdMd5List.get(0)}">
-                                                    </div>
-                                                    <div>
-                                                        <label for="bootSdiFile" style="color: black"> </label>
-                                                        <input type="text" class="form-control" value="${initrdMd5List.get(1)}">
-                                                    </div>
-                                                    <div>
-                                                        <label for="bootWimFile" style="color: black"> </label>
-                                                        <input type="text" class="form-control" value="${fileSystemMd5}">
-                                                    </div>
+                                                <div>
+                                                    <label for="bcdFile" style="color: black"> </label>
+                                                    <input type="text"  class="form-control" value="${initrdMd5List.get(0)}">
                                                 </div>
-                                            </c:if>
+                                                <div>
+                                                    <label for="bootSdiFile" style="color: black"> </label>
+                                                    <input type="text" class="form-control" value="${initrdMd5List.get(1)}">
+                                                </div>
+                                                <div>
+                                                    <label for="bootWimFile" style="color: black"> </label>
+                                                    <input type="text" class="form-control" value="${fileSystemMd5}">
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${image.getType() eq 'linux'}">
+                                            <div class="justify-content-end">
+                                                <div>
+                                                    <label for="kernelFile" style="color: black" class="form-label">Hash values:</label>
+                                                    <input type="text" class="form-control" value="${kernelMd5}">
+                                                </div>
+                                                <div>
+                                                    <label for="bcdFile" style="color: black"> </label>
+                                                    <input type="text"  class="form-control" value="${initrdMd5List.get(0)}">
+                                                </div>
+                                                <div>
+                                                    <label for="bootSdiFile" style="color: black"> </label>
+                                                    <input type="text" class="form-control" value="${initrdMd5List.get(1)}">
+                                                </div>
+                                                <div>
+                                                    <label for="bootWimFile" style="color: black"> </label>
+                                                    <input type="text" class="form-control" value="${fileSystemMd5}">
+                                                </div>
+                                            </div>
+                                        </c:if>
                                         <%--</c:if>--%>
                                     </div>
                                 </div>

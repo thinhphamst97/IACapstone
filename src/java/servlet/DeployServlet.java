@@ -87,7 +87,7 @@ public class DeployServlet extends HttpServlet {
                         request.setAttribute("imageList", (listForMultipleOS));
                         request.getRequestDispatcher(DEPLOY_MULTIPLE_OS).forward(request, response);
                     }
-                    if (request.getParameter("deployMultipleOS").equalsIgnoreCase("true")) {
+                    if (request.getParameter("deployMultipleOS") != null && request.getParameter("deployMultipleOS").equalsIgnoreCase("true")) {
                         for (ImageDTO x : listForMultipleOS) {
                             System.out.println("DEPLOY CAI NAY NE! ID= " + x.getId());
                         }

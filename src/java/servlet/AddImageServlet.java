@@ -40,11 +40,7 @@ public class AddImageServlet extends HttpServlet {
         float size = 0;
     	int addResult;
         String imageName = request.getParameter("imageName");
-        String imageDescription = request.getParameter("imageDescription");
-        
-        //FolderName will not conflict anymore
-        String imageFolderName = request.getParameter("imageFolderName");
-        
+        String imageDescription = request.getParameter("imageDescription");     
         String imagePath = getServletContext().getInitParameter("imagePath");
         String httpPath = getServletContext().getInitParameter("httpPath");
         String finalImagePath = imagePath + File.separator + imageName;

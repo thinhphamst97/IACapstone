@@ -124,11 +124,6 @@
                                                     <label for="imageDescription" style="color: black">Description: </label>
                                                     <textarea id="imageDescription" name="imageDescription" rows="4" cols="30" class="form-control"></textarea> 
                                                 </div>
-                                                <!--Directory-->
-                                                <div style="padding-bottom: 10px">
-                                                    <label for="dirName" style="color: black">Folder name:</label>
-                                                    <input type="text" id="dirName" name="imageFolderName" class="form-control">
-                                                </div>
                                                 <!--Kernel file-->
                                                 <div style="padding-bottom: 10px">
                                                     <label for="kernelFile" style="color: black" class="form-label">Kernel File:</label>
@@ -168,11 +163,6 @@
                                                 <div>
                                                     <label for="imageDescription" style="color: black">Description: </label>
                                                     <textarea id="imageDescription" name="imageDescription" rows="4" cols="30" class="form-control"></textarea> 
-                                                </div>
-                                                <!--Directory-->
-                                                <div>
-                                                    <label for="dirName" style="color: black">Folder name:</label>
-                                                    <input type="text" id="dirName" name="imageFolderName" class="form-control">
                                                 </div>
                                                 <!--VMDK file-->
                                                 <div style="padding-bottom: 10px">
