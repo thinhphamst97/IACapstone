@@ -124,11 +124,6 @@
                                                     <label for="imageDescription" style="color: black">Description: </label>
                                                     <textarea id="imageDescription" name="imageDescription" rows="4" cols="30" class="form-control"></textarea> 
                                                 </div>
-                                                <!--Kernel file-->
-                                                <div style="padding-bottom: 10px">
-                                                    <label for="kernelFile" style="color: black" class="form-label">Kernel File:</label>
-                                                    <input type="text" id="kernelFile" name="kernelFile" class="form-control">
-                                                </div>
                                                 <!--BCD file-->
                                                 <div style="padding-bottom: 10px">
                                                     <label for="bcdPath" style="color: black">BCD File:</label>
@@ -167,7 +162,7 @@
                                                 <!--VMDK file-->
                                                 <div style="padding-bottom: 10px">
                                                     <label for="kernelFile" style="color: black" class="form-label">Kernel name:</label>
-                                                    <input type="text" id="kernelFile" name="kernelFile" class="form-control">
+                                                    <input type="text" id="kernelFile" name="kernelName" class="form-control">
                                                 </div>
                                                 <!--VMDK file-->
                                                 <div style="padding-bottom: 10px">
@@ -175,7 +170,7 @@
                                                     <input type="text" id="vmdkPath" name="vmdkPath" class="form-control">
                                                 </div>
                                                 <!--Forward all text fields to Mainservlet with aciton = Image-->
-                                                <input type="hidden" name="type" value="windows"/>
+                                                <input type="hidden" name="type" value="linux"/>
                                                 <input type="hidden" name="selectedImage" value="${selectedImage}">
                                                 <button type="submit" name="action" value="AddImage" class="btn btn-primary">Add Image</button>
                                             </div>
