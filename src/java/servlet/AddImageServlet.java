@@ -50,6 +50,10 @@ public class AddImageServlet extends HttpServlet {
         	request.setAttribute("result", "Image name cannot be empty");
             forward(PAGE, request, response);
         }
+        if (!imageName.matches("(\\w)+")) {
+        	request.setAttribute("result", "Image name can only contains alphanumeric & underscore");
+            forward(PAGE, request, response);
+        }
         String type = request.getParameter("type");
         if ("windows".equalsIgnoreCase(type)) {
             File finalImageDir = new File(finalImagePath);
@@ -116,9 +120,8 @@ public class AddImageServlet extends HttpServlet {
             
             //Execute ltsp commands
             String[] cmdArray = new String[]{"/bin/sh", "-c", "ltsp image " + tempImagePath + File.separator + imageName + ".img"};//new String[]{"ltsp", "image", };
-            String output = Utils.executeCommand(cmdArray);
-            Files.writeString(Paths.get(logFilePath), output, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-            if (output.contains("To update the iPXE menu, run: ltsp ipxe")) {
+            String output = Utils.executeCommand(cmdArray, logFilePath);
+            if (output.contains("To update the iPXE menu")) {
             	//Successful
             	String ltspImageDirPath = "/srv/tftp/ltsp/" + imageName;
             	String ltspInitrdPath = ltspImageDirPath + File.pathSeparator + "initrd.img";

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
@@ -105,9 +106,45 @@ public class Utils {
 		}
 		return output;
 	}
+
+	public static String executeCommand(String[] cmdArray, String logFilePath) {
+		String output = "";
+		Process process = null;
+		try {
+			Files.deleteIfExists(Paths.get(logFilePath));
+			Files.createFile(Paths.get(logFilePath));
+			process = Runtime.getRuntime().exec(cmdArray);
+			BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+//			while (process.isAlive()) {
+//				try {
+//					TimeUnit.SECONDS.sleep(1);
+//					System.out.println("Running...");
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			}
+		    String line = "";
+		    while ((line = inputReader.readLine()) != null) {
+		    	output += line + "\n";
+		    	Files.writeString(Paths.get(logFilePath), line + "\n", StandardOpenOption.WRITE, StandardOpenOption.APPEND);
+		    	System.out.println(line);
+		    }
+		    while ((line = errorReader.readLine()) != null) {
+		    	output += line + "\n";
+		    	Files.writeString(Paths.get(logFilePath), line + "\n", StandardOpenOption.WRITE, StandardOpenOption.APPEND);
+		    	System.out.println(line);
+		    }
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return output;
+	}
 	
 	public static void main(String[] args) {
-		executeCommand(new String[]{"/bin/sh", "-c", "ltsp image '/var/www/html/ltsp/tmp/x y z f.img'"});
+		//executeCommand(new String[]{"/bin/sh", "-c", "ping 1.1.1.1 -c 2"}, "/root/Desktop/log.txt");
+//		System.out.println("abcsajkfdA_12341 oi23u_".matches("(\\w)+"));
 //		try {
 //			Files.move(Paths.get("/srv/tftp/ltsp/kalix"), Paths.get("/var/www/html/ltsp/image/kalix"));
 //		} catch (IOException e) {
