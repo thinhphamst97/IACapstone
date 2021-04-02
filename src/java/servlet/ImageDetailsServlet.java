@@ -18,7 +18,7 @@ public class ImageDetailsServlet extends HttpServlet {
 
     private final long serialVersionUID = 1L;
 //    private final String PAGE = "receivehashexample.jsp";
-    private final String PAGE = "imageDetails.jsp";
+    private final String PAGE = "imagedetails.jsp";
     public ImageDetailsServlet() {
         super();
     }
