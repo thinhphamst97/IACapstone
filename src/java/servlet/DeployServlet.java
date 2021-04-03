@@ -48,7 +48,7 @@ public class DeployServlet extends HttpServlet {
                     if (request.getParameter("selectImage") != null && !request.getParameter("selectImage").equalsIgnoreCase("-1")) {
                         //Nếu selectImage == -1 thì nó là dòng text default --> bỏ qua
                         ServletContext context = getServletContext();
-                        String imagePath = context.getInitParameter("imagePath");
+                        String imagePath = context.getInitParameter("generalImageDirPath");
                         int id = Integer.valueOf(request.getParameter("selectImage"));
                         ImageDTO image = ImageDAO.getImageDetails(id);
                         if (image.getType().equalsIgnoreCase("windows")) {
@@ -62,8 +62,9 @@ public class DeployServlet extends HttpServlet {
                             request.setAttribute("fileSystemPath", fileSystemPath);
                             request.setAttribute("initrdPathList", initrdPathList);
                         } else if (image.getType().equalsIgnoreCase("linux")) {
+        					String nfsDirPath = getServletContext().getInitParameter("nfsDirPath");
                             String kernelPath = String.format("%s/%s/vmlinuz", imagePath, image.getName());
-                            String fileSystemPath = String.format("%s/%s/%s.img", imagePath, image.getName(), image.getName());
+                            String fileSystemPath = String.format("%s/%s.img", nfsDirPath, image.getName());
                             ArrayList<String> initrdPathList = new ArrayList<String>();
                             initrdPathList.add(String.format("%s/%s/initrd.img", imagePath, image.getName()));
                             initrdPathList.add(String.format("%s/ltsp.img", imagePath));
