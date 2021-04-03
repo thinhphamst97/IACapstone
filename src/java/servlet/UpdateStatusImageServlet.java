@@ -34,7 +34,7 @@ public class UpdateStatusImageServlet extends HttpServlet {
 			}
 		}
 		request.setAttribute("updateStatusImageResult", true);
-		forward(PAGE, request, response);
+		forward(PAGE, request, response); return;
 	}
 
 	private void forward(String PAGE, HttpServletRequest request, HttpServletResponse response)

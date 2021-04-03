@@ -53,7 +53,7 @@ public class ImageDetailsServlet extends HttpServlet {
 					request.setAttribute("fileSystemMd5", Utils.getMd5OfFile(fileSystemPath));
 					request.setAttribute("initrdPathList", initrdPathList);
 					request.setAttribute("initrdMd5List", initrdMd5List);
-					forward(PAGE, request, response);
+					forward(PAGE, request, response); return;
 				} else if (image.getType().equalsIgnoreCase("linux")) {
 					String nfsDirPath = getServletContext().getInitParameter("nfsDirPath");
 					String kernelPath = String.format("%s/%s/vmlinuz", imagePath, image.getName());
@@ -74,7 +74,7 @@ public class ImageDetailsServlet extends HttpServlet {
 					request.setAttribute("fileSystemMd5", Utils.getMd5OfFile(fileSystemPath));
 					request.setAttribute("initrdPathList", initrdPathList);
 					request.setAttribute("initrdMd5List", initrdMd5List);
-					forward(PAGE, request, response);
+					forward(PAGE, request, response); return;
 				} else {
 					out.println("Unknown image type");
 					out.close();
@@ -85,9 +85,6 @@ public class ImageDetailsServlet extends HttpServlet {
 				out.close();
 				return;
 			}
-			// call ImageDAO
-			out.println(imagePath);
-			out.println(id);
 		} else {
 			out.println("Need to specify image id: id=...");
 		}

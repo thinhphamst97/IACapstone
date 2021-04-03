@@ -43,11 +43,11 @@ public class AddImageServlet extends HttpServlet {
         
         if (imageName == null || imageName.equals("")) {
         	request.setAttribute("result", "Image name cannot be empty");
-            forward(PAGE, request, response); 
+            forward(PAGE, request, response); return; 
         }
         if (!imageName.matches("(\\w)+")) {
         	request.setAttribute("result", "Image name can only contains alphanumeric & underscore");
-            forward(PAGE, request, response); 
+            forward(PAGE, request, response); return; 
         }
         String type = request.getParameter("type");
         if ("windows".equalsIgnoreCase(type)) {
@@ -57,7 +57,7 @@ public class AddImageServlet extends HttpServlet {
             	
             } else {
             	request.setAttribute("result", "Image name is not available");
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
             
         	int wimbootId = Integer.parseInt(getServletContext().getInitParameter("wimbootId"));
@@ -67,17 +67,17 @@ public class AddImageServlet extends HttpServlet {
             if (bcdPath.equals("") || !Files.exists(Paths.get(bcdPath))) {
                 request.setAttribute("result", "bcd path is invalid");
                 imageDir.delete();
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
             if (bootSdiPath.equals("") || !Files.exists(Paths.get(bootSdiPath))) {
                 request.setAttribute("result", "boot.sdi path is invalid");
                 imageDir.delete();
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
             if (bootWimPath.equals("") || !Files.exists(Paths.get(bootWimPath))) {
                 request.setAttribute("result", "boot.wim path is invalid");
                 imageDir.delete();
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
             
             // Mkdir and copy files
@@ -98,7 +98,7 @@ public class AddImageServlet extends HttpServlet {
             addResult = ImageDAO.addImage(imageName, "windows", size, imageDescription, false, Date.valueOf(LocalDate.now()), wimbootId);
             if (addResult != 1) {
                 request.setAttribute("result", "Fail to add image");
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
         } else if ("linux".equalsIgnoreCase(type)) {
         	String kernelName = request.getParameter("kernelName");
@@ -106,13 +106,13 @@ public class AddImageServlet extends HttpServlet {
         	String linkFilePath = tempImagePath + File.separator + imageName + ".img";
         	if (kernelName == null || kernelName.equals("")) {
                 request.setAttribute("result", "Kernel name cannot be empty");
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
         	}
             
             String vmdkPath = request.getParameter("vmdkPath");
             if (vmdkPath.equals("") || !Files.exists(Paths.get(vmdkPath))) {
                 request.setAttribute("result", "VMDK path is invalid");
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
             Files.createSymbolicLink(Paths.get(linkFilePath), Paths.get(vmdkPath));
             
@@ -141,44 +141,47 @@ public class AddImageServlet extends HttpServlet {
                             //Add information to database
                             addResult = KernelDAO.addKernel(kernelName);
                             if (addResult != 1) {
+                            	Files.delete(Paths.get(linkFilePath));
                                 request.setAttribute("result", "Fail to add kernel");
-                                forward(PAGE, request, response); 
+                                forward(PAGE, request, response); return; 
                             }
                             addResult = ImageDAO.addImage(imageName, "linux", size, imageDescription, false, Date.valueOf(LocalDate.now()), KernelDAO.getHighestId());
                             if (addResult != 1) {
+                            	Files.delete(Paths.get(linkFilePath));
                                 request.setAttribute("result", "Fail to add image");
-                                forward(PAGE, request, response); 
+                                forward(PAGE, request, response); return; 
                             }
+                        	Files.delete(Paths.get(linkFilePath));
                 		} else {
                         	Files.delete(Paths.get(linkFilePath));
                             request.setAttribute("result", "File " + ltspVmlinuzPath + " does not exist");
-                            forward(PAGE, request, response); 
+                            forward(PAGE, request, response); return; 
                 		}
             		} else {
                     	Files.delete(Paths.get(linkFilePath));
                         request.setAttribute("result", "File " + ltspInitrdPath + " does not exist");
-                        forward(PAGE, request, response); 
+                        forward(PAGE, request, response); return; 
             		}
             	} else {
                 	Files.delete(Paths.get(linkFilePath));
                     request.setAttribute("result", "Directory " + ltspImageDirPath + " does not exist");
-                    forward(PAGE, request, response); 
+                    forward(PAGE, request, response); return; 
             	}
             } else {
             	//Fail
                 //Remove link file
-            	//Files.delete(Paths.get(linkFilePath));
+            	Files.delete(Paths.get(linkFilePath));
             	String command = cmdArray[0] + cmdArray[1] + cmdArray[2];
                 request.setAttribute("result", String.format("Failed to run command \"%s\". Read the log file at %s",
                 		command, logFilePath));
-                forward(PAGE, request, response); 
+                forward(PAGE, request, response); return; 
             }
         } else {
             request.setAttribute("result", "Unknown image type");
-            forward(PAGE, request, response); 
+            forward(PAGE, request, response); return; 
         }
         request.setAttribute("result", "true");
-        forward(PAGE, request, response); 
+        forward(PAGE, request, response); return; 
     }
     
     private void forward(String PAGE, HttpServletRequest request, HttpServletResponse response)

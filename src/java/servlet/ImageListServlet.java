@@ -28,7 +28,7 @@ public class ImageListServlet extends HttpServlet {
 		ArrayList<ImageDTO> imageList = ImageDAO.getImageList();
 		if (imageList != null) {
 			request.setAttribute("imageList", (imageList));
-			forward(PAGE, request, response);
+			forward(PAGE, request, response); return;
 		} else {
 			PrintWriter out = response.getWriter();
 			out.println("Empty image list");
