@@ -7,7 +7,12 @@ package servlet;
 
 import dao.ImageDAO;
 import dto.ImageDTO;
+import utils.Utils;
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -44,7 +49,7 @@ public class DeployServlet extends HttpServlet {
                 case 0:
                     ArrayList<ImageDTO> listForSingleOS = ImageDAO.getAll();
                     request.setAttribute("imageList", listForSingleOS);
-                    //Nếu request chứ selectImage --> trả về selectImage
+                    //Nếu request chứa selectImage --> trả về selectImage
                     if (request.getParameter("selectImage") != null && !request.getParameter("selectImage").equalsIgnoreCase("-1")) {
                         //Nếu selectImage == -1 thì nó là dòng text default --> bỏ qua
                         ServletContext context = getServletContext();
@@ -76,30 +81,41 @@ public class DeployServlet extends HttpServlet {
                     }
                     //Nếu request chứa ID Deploy 
                     if (request.getParameter("idDeploy") != null) {
+                    	String menuDirPath = getServletContext().getInitParameter("menuDirPath");
                         int id = Integer.valueOf(request.getParameter("idDeploy"));
-                        System.out.println("DEPLOY CAI NAY NE! ID= " + id);
+                        ImageDTO image = ImageDAO.getImage(id);
+                        String imageName = image.getName();
+                        String imageType = image.getType();
+                        String menu = Utils.createMenu(menuDirPath, imageName, imageType);
+                        Files.deleteIfExists(Paths.get("/srv/tftp/ltsp/ltsp.ipxe"));
+                        Files.writeString(Paths.get("/srv/tftp/ltsp/ltsp.ipxe"), menu, StandardOpenOption.WRITE, StandardOpenOption.CREATE);
                     }
-                    request.getRequestDispatcher(DEPLOY_SINGLE_OS).forward(request, response);
-                    break;
+                    request.setAttribute("result", "true");
+                    forward(DEPLOY_SINGLE_OS, request, response); return;
                 case 1:
-                    ArrayList<ImageDTO> listForMultipleOS = ImageDAO.getImageActiveList();
-                    if (listForMultipleOS != null) {
-                        request.setAttribute("imageList", (listForMultipleOS));
-                        request.getRequestDispatcher(DEPLOY_MULTIPLE_OS).forward(request, response);
-                    }
-                    if (request.getParameter("deployMultipleOS") != null && request.getParameter("deployMultipleOS").equalsIgnoreCase("true")) {
-                        for (ImageDTO x : listForMultipleOS) {
-                            System.out.println("DEPLOY CAI NAY NE! ID= " + x.getId());
-                        }
-                    }
+//                    ArrayList<ImageDTO> listForMultipleOS = ImageDAO.getImageActiveList();
+//                    if (listForMultipleOS != null) {
+//                        request.setAttribute("imageList", (listForMultipleOS));
+//                        forward(DEPLOY_MULTIPLE_OS, request, response); return;
+//                    }
+//                    if (request.getParameter("deployMultipleOS") != null && request.getParameter("deployMultipleOS").equalsIgnoreCase("true")) {
+//                        for (ImageDTO x : listForMultipleOS) {
+//                            System.out.println("DEPLOY CAI NAY NE! ID= " + x.getId());
+//                        }
+//                    }
                     break;
                 case 2:
-                    request.getRequestDispatcher(DEPLOY_OS_WITHIN_CLIENTMAC).forward(request, response);
-                    break;
+                	forward(DEPLOY_OS_WITHIN_CLIENTMAC, request, response); return;
             }
 
         }
     }
+
+	private void forward(String PAGE, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher(PAGE).forward(request, response);
+		return;
+	}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

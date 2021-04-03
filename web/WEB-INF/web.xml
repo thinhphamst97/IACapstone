@@ -21,6 +21,10 @@
     </context-param>
     <context-param>
         <param-name>nfsDirPath</param-name>  
-        <param-value>/srv/ltsp/images/</param-value>  
+        <param-value>/srv/ltsp/images</param-value>  
+    </context-param>
+    <context-param>
+        <param-name>menuDirPath</param-name>  
+        <param-value>/srv/ltsp/images/menu</param-value>  
     </context-param>
 </web-app>
