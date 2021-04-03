@@ -8,9 +8,7 @@ package servlet;
 import dao.ImageDAO;
 import dto.ImageDTO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/DeployServlet")
 public class DeployServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
     private final String DEPLOY_SINGLE_OS = "deploysingleos.jsp";
     private final String DEPLOY_MULTIPLE_OS = "deploymultipleos.jsp";
     private final String DEPLOY_OS_WITHIN_CLIENTMAC = "deploywithinclientmac.jsp";
@@ -43,7 +42,7 @@ public class DeployServlet extends HttpServlet {
             //option 2: OS within Client's MAC
             switch (option) {
                 case 0:
-                    ArrayList listForSingleOS = ImageDAO.getAll();
+                    ArrayList<ImageDTO> listForSingleOS = ImageDAO.getAll();
                     request.setAttribute("imageList", listForSingleOS);
                     //Nếu request chứ selectImage --> trả về selectImage
                     if (request.getParameter("selectImage") != null && !request.getParameter("selectImage").equalsIgnoreCase("-1")) {
