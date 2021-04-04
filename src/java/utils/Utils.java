@@ -17,6 +17,57 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Utils {
+	public static String getFirstPartOfMenu(String menuDirPath) {
+		String menuPath = menuDirPath + File.separator + "1.ipxe";
+		try {
+			return Files.readString(Paths.get(menuPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String getThirdPartOfMenu(String menuDirPath) {
+		String menuPath = menuDirPath + File.separator + "3.ipxe";
+		try {
+			return Files.readString(Paths.get(menuPath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String createMenu(String menuDirPath, String imageName, String imageType) {
+		String menu = "";
+		if (imageType.equals("windows")) {
+			menu += "#!ipxe\n";
+			menu += "isset ${proxydhcp/dhcp-server} && set srv ${proxydhcp/dhcp-server} || set srv ${next-server}\n";
+			menu += "kernel http://${srv}/pxeboot/image/wimboot\n";
+			menu += String.format("module http://${srv}/pxeboot/image/%s/bcd       BCD\n", imageName);
+			menu += String.format("module http://${srv}/pxeboot/image/%s/boot.sdi  boot.sdi\n", imageName);
+			menu += String.format("module http://${srv}/pxeboot/image/%s/boot.wim  boot.wim\n", imageName);
+			menu += "boot || goto failed\n\n";
+			menu += ":failed";
+			menu += "boot || goto failed";
+		} else if (imageType.equals("linux")) {
+			menu += "#!ipxe\n";
+			menu += "isset ${proxydhcp/dhcp-server} && set srv ${proxydhcp/dhcp-server} || set srv ${next-server}\n";
+			menu += String.format("set cmdline_method root=/dev/nfs nfsroot=${srv}:/srv/ltsp "
+					+ "ltsp.image=images/%s.img loop.max_part=9\n", imageName);
+			menu += "set cmdline ${cmdline_method} ${cmdline_ltsp} ${cmdline_client}\n";
+			menu += String.format("kernel http://${srv}/pxeboot/image/%s/vmlinuz "
+					+ "initrd=ltsp.img initrd=initrd.img ${cmdline}\n", imageName);
+			menu += "initrd http://${srv}/pxeboot/image/ltsp.img\n";
+			menu += String.format("initrd http://${srv}/pxeboot/image/%s/initrd.img\n", imageName);
+			menu += "boot || goto failed\n\n";
+			menu += ":failed";
+			menu += "boot || goto failed";
+		}
+		return menu;
+	}
+
 	public static String getMd5OfFile(String filePath) {
 		MessageDigest digest;
 		File file;
@@ -90,15 +141,15 @@ public class Utils {
 //					e.printStackTrace();
 //				}
 //			}
-		    String line = "";
-		    while ((line = inputReader.readLine()) != null) {
-		    	output += line + "\n";
-		    	System.out.println(line);
-		    }
-		    while ((line = errorReader.readLine()) != null) {
-		    	output += line + "\n";
-		    	System.out.println(line);
-		    }
+			String line = "";
+			while ((line = inputReader.readLine()) != null) {
+				output += line + "\n";
+				System.out.println(line);
+			}
+			while ((line = errorReader.readLine()) != null) {
+				output += line + "\n";
+				System.out.println(line);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -123,26 +174,29 @@ public class Utils {
 //					e.printStackTrace();
 //				}
 //			}
-		    String line = "";
-		    while ((line = inputReader.readLine()) != null) {
-		    	output += line + "\n";
-		    	Files.writeString(Paths.get(logFilePath), line + "\n", StandardOpenOption.WRITE, StandardOpenOption.APPEND);
-		    	System.out.println(line);
-		    }
-		    while ((line = errorReader.readLine()) != null) {
-		    	output += line + "\n";
-		    	Files.writeString(Paths.get(logFilePath), line + "\n", StandardOpenOption.WRITE, StandardOpenOption.APPEND);
-		    	System.out.println(line);
-		    }
+			String line = "";
+			while ((line = inputReader.readLine()) != null) {
+				output += line + "\n";
+				Files.writeString(Paths.get(logFilePath), line + "\n", StandardOpenOption.WRITE,
+						StandardOpenOption.APPEND);
+				System.out.println(line);
+			}
+			while ((line = errorReader.readLine()) != null) {
+				output += line + "\n";
+				Files.writeString(Paths.get(logFilePath), line + "\n", StandardOpenOption.WRITE,
+						StandardOpenOption.APPEND);
+				System.out.println(line);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return output;
 	}
-	
+
 	public static void main(String[] args) {
-		//executeCommand(new String[]{"/bin/sh", "-c", "ping 1.1.1.1 -c 2"}, "/root/Desktop/log.txt");
+		// executeCommand(new String[]{"/bin/sh", "-c", "ping 1.1.1.1 -c 2"},
+		// "/root/Desktop/log.txt");
 //		System.out.println("abcsajkfdA_12341 oi23u_".matches("(\\w)+"));
 //		try {
 //			Files.move(Paths.get("/srv/tftp/ltsp/kalix"), Paths.get("/var/www/html/ltsp/image/kalix"));
